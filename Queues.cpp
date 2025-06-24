@@ -1,23 +1,70 @@
+/**
+ * @mainpage Documentation Circular Queues
+ * 
+ * @section Introduction
+ * Project ini merupakan project struktur data 
+ * menggunakan struktur data queues dengan pendekatan circular arrays.
+ * 
+ * @section Operations
+ * Project ini memiliki beberapa operasi antara lain:
+ * 1. Insert
+ * 2. Delete
+ * 3. Display
+ * 
+ * @section Cara Penggunaan
+ * Berikut beberapa menu yang bisa digunakan:
+ * 1. en queue
+ * 2. de queus
+ * 3. display
+ * 4. exit
+ * 
+ * @author Profil
+ * - nama :{sartika putri}
+ * - nim : {20240140154}
+ * - kelas : { c }
+ * 
+ * @brief
+ * @version 1.0
+ * @date 2025-06-24
+ * 
+ * @copyright {sartika.putri}@umy.ac.id (c) 2025
+ */
 #include <iostream>
 using namespace std;
+/**
+ * @class Queues 
+ * @brief class ini untuk operasi lengkap queues
+ * 
+*/
 
 class Queues
 {
 private:
-    static const int max = 5;
-    int FRONT, REAR;
-    int queue_array[5];
+    int FRONT; ///< variabel private front untuk menyimpan posisi depan antrian
+    int REAR;  ///< variabel private rear untuk menyimpan posisi belakang antrian
+    int max = 5; ///< variabel private max untuk menyimpan ukuran maximum antrian
+    int queue_array[5]; ///< variabel private queue_array untuk menyimpan elemen antrian
 
 public:
+    /**
+     * @brief Construct a new Queues object
+     * set default queues null
+     * with front= -1 and rear = -1
+    */
     Queues()
     {
         FRONT = -1;
         REAR = -1;
     }
 
+    /**
+     * @brief method untuk memasukkan data dalam antrian
+     * data dimasukkan dalam variable queue_array
+     */
+
     void insert()
     {
-        int num;
+        int num; ///< variabel num untuk menyimpan nilai
         cout << "Enter a number: ";
         cin >> num;
         cout << endl;
@@ -44,6 +91,12 @@ public:
         }
         queue_array[REAR] = num;
     }
+
+    /**
+     * @brief method untuk menghapus data dalam antrian
+     * data dihapuskan dari dalam variabel queue_array
+     * 
+    */
     void remove()
     {
         // Cek apakah antrian kosong
@@ -52,30 +105,34 @@ public:
             cout << "Queue underflow\n";
             return;
         }
-         cout << "\nThe element deleted from the queue is: " << queue_array[FRONT] << "\n";
+        cout << "\nThe element deleted from the queue is: " << queue_array[FRONT] << "\n";
 
-         // Cek jika antrian hanya memiliki satu elemen
+        // Cek jika antrian hanya memiliki satu elemen
         if (FRONT == REAR)
         {
             FRONT = -1;
             REAR = -1;
         }
-         else
+        else
         {
             // Jika elemen yang dihapus berada diposisi terakhir array, kembali ke awal array
             if (FRONT == max - 1)
                 FRONT = 0;
             else
                 FRONT = FRONT + 1;
-
         }
     }
+
+    /**
+     * @brief method untuk menampilkan data dalam antrian
+     * data ditampilkan yang berada dalam variable queue_array
+     */
     void display()
     {
-        int FRONT_position = FRONT;
-        int REAR_position = REAR;
+        int FRONT_position = FRONT; ///< variable front_position untuk menandakan posisi element pertama pada variable front
+        int REAR_position = REAR;   ///< variable rear_position untuk menandakan posisi element terakhir pada variable rear
 
-         // Cek apakah antrian kosong
+        // Cek apakah antrian kosong
         if (FRONT == -1)
         {
             cout << "Queue is empty\n";
@@ -83,7 +140,7 @@ public:
         }
         cout << "\nElements in the queue are...\n";
 
-                // Jika FRONT_position <= REAR_position, iterasi dari FRONT hingga REAR
+        // Jika FRONT_position <= REAR_position, iterasi dari FRONT hingga REAR
         if (FRONT_position <= REAR_position)
         {
             while (FRONT_position <= REAR_position)
@@ -95,7 +152,7 @@ public:
         }
         else
         {
-             // Jika FRONT_position > REAR_position, iterasi dari FRONT hingga akhir array
+            // Jika FRONT_position > REAR_position, iterasi dari FRONT hingga akhir array
             while (FRONT_position <= max - 1)
             {
                 cout << queue_array[FRONT_position] << "    ";
@@ -104,22 +161,28 @@ public:
 
             FRONT_position = 0;
 
-             while (FRONT_position <= REAR_position)
+            while (FRONT_position <= REAR_position)
             {
                 cout << queue_array[FRONT_position] << "    ";
                 FRONT_position++;
             }
             cout << endl;
-        }   
+        }
     }
 };
 
-int main() 
-{
-    Queues q;
-    char ch;
+/**
+ * @brief method utama untuk menjalankan program
+ * 
+ * @return int
+ */
 
-     while (true)
+int main()
+{
+    Queues q; ///< object untuk menggunakan member yang ada pada class queues
+    char ch;  ///< variable ch untuk menyimpan pilihan pada menu yang diberikan 
+
+    while (true)
     {
         try
         {
@@ -132,7 +195,7 @@ int main()
             cin >> ch;
             cout << endl;
 
-             switch (ch)
+            switch (ch)
             {
             case '1':
             {
@@ -140,18 +203,17 @@ int main()
                 q.insert();
                 break;
             }
-              case '2':
+            case '2':
             {
                 q.remove();
                 break;
             }
-               case '3':
+            case '3':
             {
                 q.display();
                 break;
-
             }
-             case '4':
+            case '4':
             {
                 return 0;
             }
@@ -160,11 +222,11 @@ int main()
                 cout << "Invalid option!!" << endl;
                 break;
             }
+            }
         }
-    } 
-    catch (exception &e)
-    {
+        catch (exception &e)
+        {
             cout << "Check for the values entered," << endl;
-    }   
-
+        }
+    }
 }
